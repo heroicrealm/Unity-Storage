@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//Пример использования системы сохранения
+//РџСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ СЃРёСЃС‚РµРјС‹ СЃРѕС…СЂР°РЅРµРЅРёСЏ
 public class DemoBehaviour : MonoBehaviour
 {
     [SerializeField]
@@ -12,9 +12,9 @@ public class DemoBehaviour : MonoBehaviour
 
     public void Start()
     {
-        //Есть префаб "DynamicEnemy"
+        //Р•СЃС‚СЊ РїСЂРµС„Р°Р± "DynamicEnemy"
         GameObject pref = Resources.Load("DynamicEnemy") as GameObject;
-        //Создадим 10 штук
+        //РЎРѕР·РґР°РґРёРј 10 С€С‚СѓРє
         for (int i = 0; i <= 10; i++) {
             GameObject go = GameObject.Instantiate(pref);
             DynamicEnemySaver sb = go.GetComponent<DynamicEnemySaver>();
@@ -26,13 +26,13 @@ public class DemoBehaviour : MonoBehaviour
                Random.Range(0f, 1f),
                Random.Range(0f, 1f)
               ));
-            sb.SetSaveSystem(saveSystem); //Если в префабе проставлена ссылка на SaveSystem, данная строка не нужна
-            sb.RegisterInSaveSystem(); //Если в префабе проставлена ссылка на SaveSystem, данная строка не нужна
+            sb.SetSaveSystem(saveSystem); //Р•СЃР»Рё РІ РїСЂРµС„Р°Р±Рµ РїСЂРѕСЃС‚Р°РІР»РµРЅР° СЃСЃС‹Р»РєР° РЅР° SaveSystem, РґР°РЅРЅР°СЏ СЃС‚СЂРѕРєР° РЅРµ РЅСѓР¶РЅР°
+            sb.RegisterInSaveSystem(); //Р•СЃР»Рё РІ РїСЂРµС„Р°Р±Рµ РїСЂРѕСЃС‚Р°РІР»РµРЅР° СЃСЃС‹Р»РєР° РЅР° SaveSystem, РґР°РЅРЅР°СЏ СЃС‚СЂРѕРєР° РЅРµ РЅСѓР¶РЅР°
 
             go.transform.position = new Vector2(0f, 0f) + Random.insideUnitCircle * 5;
             go.name = "MyEnemy" + go.GetInstanceID();
         }
-        saveSystem.SetСustomData("Prop", "Hello");
+        saveSystem.SetРЎustomData("Prop", "Hello");
     }
 
 

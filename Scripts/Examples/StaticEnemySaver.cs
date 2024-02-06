@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//Пример сохраняемой сущности, которая создается в редакторе юнити
-//Чтобы сущность сохранялась, прицепить этот скрипт к объекту сцены юнити
-//В инспекторе установить ссылку на ScriptableObject SaveSystem
-//В инспекторе установить тип объекта STATIC или GLOBAL_STATIOC
-//!!!Имя объекта должно быть уникальным в рамках сцены!!!
+//РџСЂРёРјРµСЂ СЃРѕС…СЂР°РЅСЏРµРјРѕР№ СЃСѓС‰РЅРѕСЃС‚Рё, РєРѕС‚РѕСЂР°СЏ СЃРѕР·РґР°РµС‚СЃСЏ РІ СЂРµРґР°РєС‚РѕСЂРµ СЋРЅРёС‚Рё
+//Р§С‚РѕР±С‹ СЃСѓС‰РЅРѕСЃС‚СЊ СЃРѕС…СЂР°РЅСЏР»Р°СЃСЊ, РїСЂРёС†РµРїРёС‚СЊ СЌС‚РѕС‚ СЃРєСЂРёРїС‚ Рє РѕР±СЉРµРєС‚Сѓ СЃС†РµРЅС‹ СЋРЅРёС‚Рё
+//Р’ РёРЅСЃРїРµРєС‚РѕСЂРµ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° ScriptableObject SaveSystem
+//Р’ РёРЅСЃРїРµРєС‚РѕСЂРµ СѓСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РёРї РѕР±СЉРµРєС‚Р° STATIC РёР»Рё GLOBAL_STATIOC
+//!!!РРјСЏ РѕР±СЉРµРєС‚Р° РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ СѓРЅРёРєР°Р»СЊРЅС‹Рј РІ СЂР°РјРєР°С… СЃС†РµРЅС‹!!!
 public class StaticEnemySaver : SaveableBehaviour
 {
     
@@ -18,24 +18,24 @@ public class StaticEnemySaver : SaveableBehaviour
     {
         return "StaticEnemy";
     }
-    //Восстановление данных
+    //Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С…
     public override void loadData(string packageData)
     {
-        //десериализация из JSON
+        //РґРµСЃРµСЂРёР°Р»РёР·Р°С†РёСЏ РёР· JSON
         _SESData ssd = JsonConvert.DeserializeObject<_SESData>(packageData);
-        //Восстанавливаем данные, храним только позицию
+        //Р’РѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РґР°РЅРЅС‹Рµ, С…СЂР°РЅРёРј С‚РѕР»СЊРєРѕ РїРѕР·РёС†РёСЋ
         this.transform.position = new Vector3(ssd.x, ssd.y, 0);
     }
 
-    //Сохранение данных
+    //РЎРѕС…СЂР°РЅРµРЅРёРµ РґР°РЅРЅС‹С…
     public override string SerializeObject()
     {
-        //Сохраняем в служебный класс
+        //РЎРѕС…СЂР°РЅСЏРµРј РІ СЃР»СѓР¶РµР±РЅС‹Р№ РєР»Р°СЃСЃ
         _SESData ssd = new _SESData();
         ssd.x = this.transform.position.x;
         ssd.y = this.transform.position.y;   
 
-        //сериализуем в JSON
+        //СЃРµСЂРёР°Р»РёР·СѓРµРј РІ JSON
         return JsonConvert.SerializeObject(ssd);
 
     }

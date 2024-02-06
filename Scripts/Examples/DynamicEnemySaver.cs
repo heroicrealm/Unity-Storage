@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 using System;
 using UnityEngine;
 
-//Пример сохраняемой сущности, которая создается во время игры
-//Чтобы сущность сохранялась, прицепить этот скрипт к префабу
-//В инспекторе префаба установить ссылку на ScriptableObject SaveSystem
-//В инспекторе префаба установить тип объекта DYNAMIC или GLOBAL_DYNAMIC
-//Так же эти данные можно проставить после GameObject.Instantiate
+//РџСЂРёРјРµСЂ СЃРѕС…СЂР°РЅСЏРµРјРѕР№ СЃСѓС‰РЅРѕСЃС‚Рё, РєРѕС‚РѕСЂР°СЏ СЃРѕР·РґР°РµС‚СЃСЏ РІРѕ РІСЂРµРјСЏ РёРіСЂС‹
+//Р§С‚РѕР±С‹ СЃСѓС‰РЅРѕСЃС‚СЊ СЃРѕС…СЂР°РЅСЏР»Р°СЃСЊ, РїСЂРёС†РµРїРёС‚СЊ СЌС‚РѕС‚ СЃРєСЂРёРїС‚ Рє РїСЂРµС„Р°Р±Сѓ
+//Р’ РёРЅСЃРїРµРєС‚РѕСЂРµ РїСЂРµС„Р°Р±Р° СѓСЃС‚Р°РЅРѕРІРёС‚СЊ СЃСЃС‹Р»РєСѓ РЅР° ScriptableObject SaveSystem
+//Р’ РёРЅСЃРїРµРєС‚РѕСЂРµ РїСЂРµС„Р°Р±Р° СѓСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РёРї РѕР±СЉРµРєС‚Р° DYNAMIC РёР»Рё GLOBAL_DYNAMIC
+//РўР°Рє Р¶Рµ СЌС‚Рё РґР°РЅРЅС‹Рµ РјРѕР¶РЅРѕ РїСЂРѕСЃС‚Р°РІРёС‚СЊ РїРѕСЃР»Рµ GameObject.Instantiate
 public class DynamicEnemySaver : SaveableBehaviour
 {
     
@@ -24,7 +24,7 @@ public class DynamicEnemySaver : SaveableBehaviour
         base.Awake();
         spriteRenderer = GetComponent<SpriteRenderer>();        
     }
-    //Восстановление данных
+    //Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С…
     public override void loadData(string packageData)
     {
        

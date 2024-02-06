@@ -6,14 +6,14 @@ using UnityEngine;
 namespace HeroicRealm.SaveSystem
 {
    /**
-    * Служебный класс для сохранения данных о сущности
+    * РЎР»СѓР¶РµР±РЅС‹Р№ РєР»Р°СЃСЃ РґР»СЏ СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… Рѕ СЃСѓС‰РЅРѕСЃС‚Рё
     * */
     [Serializable]
     public class SavePackage 
     {
-        public ESavebleType savebleType; //тип сущности
-        public string name;  // имя сущности
-        public string prefabName; // имя префаба
-        public string packageData; // Данные сущности
+        public ESavebleType savebleType; //С‚РёРї СЃСѓС‰РЅРѕСЃС‚Рё
+        public string name;  // РёРјСЏ СЃСѓС‰РЅРѕСЃС‚Рё
+        public string prefabName; // РёРјСЏ РїСЂРµС„Р°Р±Р°
+        public string packageData; // Р”Р°РЅРЅС‹Рµ СЃСѓС‰РЅРѕСЃС‚Рё
     }
 }

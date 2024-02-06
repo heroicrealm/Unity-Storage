@@ -13,8 +13,8 @@ namespace HeroicRealm.SaveSystem
 {
 
     /**
-     Основной класс для сохраниния.
-     Создается как ScriptableObject Asset в рамках проекта
+     РћСЃРЅРѕРІРЅРѕР№ РєР»Р°СЃСЃ РґР»СЏ СЃРѕС…СЂР°РЅРёРЅРёСЏ.
+     РЎРѕР·РґР°РµС‚СЃСЏ РєР°Рє ScriptableObject Asset РІ СЂР°РјРєР°С… РїСЂРѕРµРєС‚Р°
      */
     [CreateAssetMenu(fileName = "NewSaveSystem", menuName = "Save System", order = 51)]
     public class SaveSystem : ScriptableObject
@@ -23,87 +23,87 @@ namespace HeroicRealm.SaveSystem
         // CLASS MEMBERS
         /////////////////////////////////////////////////////////////////
     
-        //Список отслеживаемых сущностей
+        //РЎРїРёСЃРѕРє РѕС‚СЃР»РµР¶РёРІР°РµРјС‹С… СЃСѓС‰РЅРѕСЃС‚РµР№
         [System.NonSerialized]
         List<GameObject> monitoredObjects = new List<GameObject>();
 
-        //Хранилище данных для хранения в памяти 
+        //РҐСЂР°РЅРёР»РёС‰Рµ РґР°РЅРЅС‹С… РґР»СЏ С…СЂР°РЅРµРЅРёСЏ РІ РїР°РјСЏС‚Рё 
         [System.NonSerialized]
         Dictionary<string,List<SavePackage>> inMemorySave = new Dictionary<string,List<SavePackage>>();
 
-        //Данные в свободном виде
+        //Р”Р°РЅРЅС‹Рµ РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
         [System.NonSerialized]
         Dictionary<string,object> customData= new Dictionary<string,object>();
 
-        //Метка не выгружать объект если неиспользется        
+        //РњРµС‚РєР° РЅРµ РІС‹РіСЂСѓР¶Р°С‚СЊ РѕР±СЉРµРєС‚ РµСЃР»Рё РЅРµРёСЃРїРѕР»СЊР·РµС‚СЃСЏ        
         private void OnEnable() => hideFlags = HideFlags.DontUnloadUnusedAsset;
         
         /////////////////////////////////////////////////////////////////////
         // PUBLIC METHODS
         /////////////////////////////////////////////////////////////////////
         
-        //Добавляет сущность для отслеживания
+        //Р”РѕР±Р°РІР»СЏРµС‚ СЃСѓС‰РЅРѕСЃС‚СЊ РґР»СЏ РѕС‚СЃР»РµР¶РёРІР°РЅРёСЏ
         public void AddSaveableObject(GameObject gameObject)
         {                    
             monitoredObjects.Add(gameObject);                   
         }
         /**********************************************************************************************/
-        //Удаляет сущность из списка отслеживаемых
+        //РЈРґР°Р»СЏРµС‚ СЃСѓС‰РЅРѕСЃС‚СЊ РёР· СЃРїРёСЃРєР° РѕС‚СЃР»РµР¶РёРІР°РµРјС‹С…
         public void RemoveSaveableObject(GameObject gameObject)
         {
             this.monitoredObjects.Remove(gameObject);
         }
         /**********************************************************************************************/
-        //Добавляет данные в свободном виде
-        // Данные должны быть мериализуемы
+        //Р”РѕР±Р°РІР»СЏРµС‚ РґР°РЅРЅС‹Рµ РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
+        // Р”Р°РЅРЅС‹Рµ РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ РјРµСЂРёР°Р»РёР·СѓРµРјС‹
         //
-        public void SetСustomData(String key, object value)
+        public void SetРЎustomData(String key, object value)
         {
             this.customData[key] = value;
         }
         /**********************************************************************************************/
-        //получает данные в свободном виде
-        public object GetСustomData(String key)
+        //РїРѕР»СѓС‡Р°РµС‚ РґР°РЅРЅС‹Рµ РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
+        public object GetРЎustomData(String key)
         {
             return this.customData[key];            
         }
         /**********************************************************************************************/
-        //Удаляет данные в свободном виде
+        //РЈРґР°Р»СЏРµС‚ РґР°РЅРЅС‹Рµ РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
         public void DeleteCustomData(String key)
         {
             this.customData.Remove(key);
         }
         /**********************************************************************************************/
-        //Удаляет данные в свободном виде
+        //РЈРґР°Р»СЏРµС‚ РґР°РЅРЅС‹Рµ РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
         public bool ContainsCustomData(String key)
         {
             return this.customData.ContainsKey(key);
         }
         /**********************************************************************************************/
 
-        //Сохраняет сущности в фаил
+        //РЎРѕС…СЂР°РЅСЏРµС‚ СЃСѓС‰РЅРѕСЃС‚Рё РІ С„Р°РёР»
         public void Save(String fileName)
         {
-            //Откроем фаил
+            //РћС‚РєСЂРѕРµРј С„Р°РёР»
             using (var fileStream = new FileStream(fileName, FileMode.OpenOrCreate))
             {
                 using (var archive = new ZipArchive(fileStream, ZipArchiveMode.Update))
                 {
-                    //сохраняем объекты сцены
+                    //СЃРѕС…СЂР°РЅСЏРµРј РѕР±СЉРµРєС‚С‹ СЃС†РµРЅС‹
                     var entry = archive.GetEntry(SceneManager.GetActiveScene().name + ".scd");
-                    //удаляем прошлое сохранение
+                    //СѓРґР°Р»СЏРµРј РїСЂРѕС€Р»РѕРµ СЃРѕС…СЂР°РЅРµРЅРёРµ
                     if (entry != null) entry.Delete();                    
                     var realmFile = archive.CreateEntry(SceneManager.GetActiveScene().name + ".scd");
                     using (var entryStream = realmFile.Open())
                     {
                         using (var streamWriter = new StreamWriter(entryStream))
                         {
-                            //Сохраняем пакеты данных сцены как JSON фаил
+                            //РЎРѕС…СЂР°РЅСЏРµРј РїР°РєРµС‚С‹ РґР°РЅРЅС‹С… СЃС†РµРЅС‹ РєР°Рє JSON С„Р°РёР»
                             streamWriter.Write(JsonConvert.SerializeObject(getSceneData(true), Formatting.Indented));
                         }
                     }
 
-                    //Сохраняем глобальные данные
+                    //РЎРѕС…СЂР°РЅСЏРµРј РіР»РѕР±Р°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ
                     entry = archive.GetEntry("global.scd");
                     if (entry != null) entry.Delete();
                     realmFile = archive.CreateEntry("global.scd");
@@ -113,7 +113,7 @@ namespace HeroicRealm.SaveSystem
                         streamWriter.Write(JsonConvert.SerializeObject(getSceneData(false), Formatting.Indented));
                     }
 
-                    //Сохраняем данные в свободном виде
+                    //РЎРѕС…СЂР°РЅСЏРµРј РґР°РЅРЅС‹Рµ РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
                     entry = archive.GetEntry("custom.scd");
                     if (entry != null) entry.Delete();
                     realmFile = archive.CreateEntry("custom.scd");
@@ -127,17 +127,17 @@ namespace HeroicRealm.SaveSystem
         }
 
         /**********************************************************************************************/
-        // Загружает сущности из фаила
+        // Р—Р°РіСЂСѓР¶Р°РµС‚ СЃСѓС‰РЅРѕСЃС‚Рё РёР· С„Р°РёР»Р°
         public void Load(string filename)
         {
-            //Удаляем динамически созданные сущности
+            //РЈРґР°Р»СЏРµРј РґРёРЅР°РјРёС‡РµСЃРєРё СЃРѕР·РґР°РЅРЅС‹Рµ СЃСѓС‰РЅРѕСЃС‚Рё
             DestroySpawned();
-            //открываем архив
+            //РѕС‚РєСЂС‹РІР°РµРј Р°СЂС…РёРІ
             using (var fileStream = new FileStream(filename, FileMode.Open))
             {
                 using (var archive = new ZipArchive(fileStream))
                 {
-                    //Загружаем сущности сцены
+                    //Р—Р°РіСЂСѓР¶Р°РµРј СЃСѓС‰РЅРѕСЃС‚Рё СЃС†РµРЅС‹
                     var entry = archive.GetEntry(SceneManager.GetActiveScene().name + ".scd");
                     Debug.Log("Loading:" + entry.Name);
                     using (var entryStream = entry.Open())
@@ -147,7 +147,7 @@ namespace HeroicRealm.SaveSystem
                         loadSceneData(JsonConvert.DeserializeObject<List<SavePackage>>(streamReader.ReadToEnd()));
                     }
 
-                    //Загружаем глобальные сущности
+                    //Р—Р°РіСЂСѓР¶Р°РµРј РіР»РѕР±Р°Р»СЊРЅС‹Рµ СЃСѓС‰РЅРѕСЃС‚Рё
                     entry = archive.GetEntry("global.scd");
                     Debug.Log("Loading:" + entry.Name);
                     using (var entryStream = entry.Open())
@@ -155,7 +155,7 @@ namespace HeroicRealm.SaveSystem
                     {
                         loadSceneData(JsonConvert.DeserializeObject<List<SavePackage>>(streamReader.ReadToEnd()));
                     }
-                    //загружаем данные в свободном виде
+                    //Р·Р°РіСЂСѓР¶Р°РµРј РґР°РЅРЅС‹Рµ РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
                     entry = archive.GetEntry("custom.scd");
                   
                     using (var entryStream = entry.Open())
@@ -167,7 +167,7 @@ namespace HeroicRealm.SaveSystem
 
                 }
             }
-            //Сообщаем сущностям что данные загружены       
+            //РЎРѕРѕР±С‰Р°РµРј СЃСѓС‰РЅРѕСЃС‚СЏРј С‡С‚Рѕ РґР°РЅРЅС‹Рµ Р·Р°РіСЂСѓР¶РµРЅС‹       
             foreach (GameObject go in this.monitoredObjects)
             {
                 go.GetComponent<SaveableBehaviour>().OnWorldLoaded();
@@ -176,7 +176,7 @@ namespace HeroicRealm.SaveSystem
         }
         
         /**********************************************************************************************/
-        //Сохраняет данные в память        
+        //РЎРѕС…СЂР°РЅСЏРµС‚ РґР°РЅРЅС‹Рµ РІ РїР°РјСЏС‚СЊ        
         public void Save()
         {
             FlushInMemory();            
@@ -186,7 +186,7 @@ namespace HeroicRealm.SaveSystem
         }
 
         /***********************************************************************************************/
-        //Загружает данные из памяти
+        //Р—Р°РіСЂСѓР¶Р°РµС‚ РґР°РЅРЅС‹Рµ РёР· РїР°РјСЏС‚Рё
         public void Load()
         {
             DestroySpawned();
@@ -205,7 +205,7 @@ namespace HeroicRealm.SaveSystem
                 loadCustomData(list);
             }
 
-            //Сообщаем сущностям что данные загружены       
+            //РЎРѕРѕР±С‰Р°РµРј СЃСѓС‰РЅРѕСЃС‚СЏРј С‡С‚Рѕ РґР°РЅРЅС‹Рµ Р·Р°РіСЂСѓР¶РµРЅС‹       
             foreach (GameObject go in this.monitoredObjects)
             {
                 go.GetComponent<SaveableBehaviour>().OnWorldLoaded();
@@ -213,7 +213,7 @@ namespace HeroicRealm.SaveSystem
         }
 
         /**********************************************************************************************/
-        //Очищает буффер в памяти
+        //РћС‡РёС‰Р°РµС‚ Р±СѓС„С„РµСЂ РІ РїР°РјСЏС‚Рё
         public void FlushInMemory()
         {
             inMemorySave.Remove(SceneManager.GetActiveScene().name);
@@ -222,13 +222,13 @@ namespace HeroicRealm.SaveSystem
         }
         
         /**********************************************************************************************/
-        //Очищает буфер памяти      
+        //РћС‡РёС‰Р°РµС‚ Р±СѓС„РµСЂ РїР°РјСЏС‚Рё      
 
         /////////////////////////////////////////////////////////////////////
         // PRIVATE METHODS
         /////////////////////////////////////////////////////////////////////
         
-        //  Удаляет ранее загруженные динамические объекты
+        //  РЈРґР°Р»СЏРµС‚ СЂР°РЅРµРµ Р·Р°РіСЂСѓР¶РµРЅРЅС‹Рµ РґРёРЅР°РјРёС‡РµСЃРєРёРµ РѕР±СЉРµРєС‚С‹
         private void DestroySpawned()
         {
             foreach (GameObject go in monitoredObjects)
@@ -247,7 +247,7 @@ namespace HeroicRealm.SaveSystem
         }
 
         /**********************************************************************************************/
-        //Получения пакетов сохранения данных в свободном виде
+        //РџРѕР»СѓС‡РµРЅРёСЏ РїР°РєРµС‚РѕРІ СЃРѕС…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С… РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
         private List<SavePackage> getCustomData()
         {
             List<SavePackage> packs = new List<SavePackage>();
@@ -263,7 +263,7 @@ namespace HeroicRealm.SaveSystem
             return packs;
         }
         /**********************************************************************************************/
-        //Восстановление данных в свободном виде
+        //Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ РґР°РЅРЅС‹С… РІ СЃРІРѕР±РѕРґРЅРѕРј РІРёРґРµ
         public void loadCustomData(List<SavePackage> packages)
         {
             foreach (SavePackage pack in packages)
@@ -276,48 +276,48 @@ namespace HeroicRealm.SaveSystem
 
 
         /**********************************************************************************************/
-        //Загрузка данных сцены
+        //Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… СЃС†РµРЅС‹
         private void loadSceneData(List<SavePackage> sceneData)
         {          
             foreach(SavePackage savePackage in sceneData)
             {
                 if(savePackage.savebleType == ESavebleType.STATIC || savePackage.savebleType == ESavebleType.GLOBAL_STATIC) 
                 {
-                    loadStatic(savePackage); // модифифкация объектов созданных в редакторе юнити
+                    loadStatic(savePackage); // РјРѕРґРёС„РёС„РєР°С†РёСЏ РѕР±СЉРµРєС‚РѕРІ СЃРѕР·РґР°РЅРЅС‹С… РІ СЂРµРґР°РєС‚РѕСЂРµ СЋРЅРёС‚Рё
                 }
                 else
                 {
-                    loadDynamic(savePackage); // спавн динамических объектов
+                    loadDynamic(savePackage); // СЃРїР°РІРЅ РґРёРЅР°РјРёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ
                 }
             }
 
         }
         /**********************************************************************************************/
-        //спавн динамических объектов из пакета
+        //СЃРїР°РІРЅ РґРёРЅР°РјРёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ РёР· РїР°РєРµС‚Р°
         private void loadDynamic(SavePackage savePackage)
         {
-            //Загружаем префаб
+            //Р—Р°РіСЂСѓР¶Р°РµРј РїСЂРµС„Р°Р±
             GameObject prefab = Resources.Load(savePackage.prefabName) as GameObject;
-            //Инстанцируем объект
+            //РРЅСЃС‚Р°РЅС†РёСЂСѓРµРј РѕР±СЉРµРєС‚
             GameObject go = GameObject.Instantiate(prefab);
-            //Настраиваем
-            //Задаем настройки из пакета
+            //РќР°СЃС‚СЂР°РёРІР°РµРј
+            //Р—Р°РґР°РµРј РЅР°СЃС‚СЂРѕР№РєРё РёР· РїР°РєРµС‚Р°
             PopulateData(savePackage, go);
         }
                 
 
         /**********************************************************************************************/
-        //Загрузка статических объектов из пакета
+        //Р—Р°РіСЂСѓР·РєР° СЃС‚Р°С‚РёС‡РµСЃРєРёС… РѕР±СЉРµРєС‚РѕРІ РёР· РїР°РєРµС‚Р°
         private void loadStatic(SavePackage savePackage)
         {
-            //находим статический объект по имени
+            //РЅР°С…РѕРґРёРј СЃС‚Р°С‚РёС‡РµСЃРєРёР№ РѕР±СЉРµРєС‚ РїРѕ РёРјРµРЅРё
             GameObject go = monitoredObjects.Find((x)=>x.name == savePackage.name);
-            //восстанавливаем из пакета
+            //РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РёР· РїР°РєРµС‚Р°
             PopulateData(savePackage, go);
         }
 
         /**********************************************************************************************/
-        //Загрузка данных из пакета в объект
+        //Р—Р°РіСЂСѓР·РєР° РґР°РЅРЅС‹С… РёР· РїР°РєРµС‚Р° РІ РѕР±СЉРµРєС‚
         private void PopulateData(SavePackage savePackage, GameObject go)
         {
             byte[] bDtata = Convert.FromBase64String(savePackage.packageData);
@@ -329,8 +329,8 @@ namespace HeroicRealm.SaveSystem
             sb.loadData(json);
         }
         /**********************************************************************************************/
-        //Получение данных сцены
-        // Параметр saveScene - true - получить данные объектов сцены, false - глобальных объектов
+        //РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… СЃС†РµРЅС‹
+        // РџР°СЂР°РјРµС‚СЂ saveScene - true - РїРѕР»СѓС‡РёС‚СЊ РґР°РЅРЅС‹Рµ РѕР±СЉРµРєС‚РѕРІ СЃС†РµРЅС‹, false - РіР»РѕР±Р°Р»СЊРЅС‹С… РѕР±СЉРµРєС‚РѕРІ
         private List<SavePackage> getSceneData(bool saveScene)
         {
             List<SavePackage> sceneData = new List<SavePackage>();
